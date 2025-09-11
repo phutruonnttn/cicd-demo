@@ -100,5 +100,4 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         run: |
           snyk monitor --all-projects \
-            --remote-repo-url=${{ github.repository }} \
-            --project-name=cicd-demo
+            --remote-repo-url=${{ github.repository }}
