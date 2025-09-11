@@ -86,7 +86,9 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         run: |
+          snyk auth $SNYK_TOKEN
           snyk test --all-projects \
+            --org=${{ secrets.SNYK_ORG }} \
             --severity-threshold=medium \
             --sarif --sarif-file-output=snyk.sarif
       - name: Upload result to GitHub Code Scanning
@@ -99,5 +101,7 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         run: |
+          snyk auth $SNYK_TOKEN
           snyk monitor --all-projects \
+            --org=${{ secrets.SNYK_ORG }} \
             --remote-repo-url=${{ github.repository }}
