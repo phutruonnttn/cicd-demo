@@ -78,7 +78,7 @@ jobs:
           cache: maven
       - name: Build (skip tests)
         run: mvn -B -DskipTests package
-      - name: Run Snyk to check for vulnerabilities
+      - name: Run Snyk test (outputs SARIF)
         uses: snyk/actions/maven@master
         continue-on-error: true
         env:
@@ -87,10 +87,22 @@ jobs:
           command: test
           args: >
             --all-projects
-            --severity-threshold=medium
+            --severity-threshold=low
             --sarif --sarif-file-output=snyk.sarif
+            --remote-repo-url=${{ github.repository }}
       - name: Upload result to GitHub Code Scanning
         if: always() && hashFiles('snyk.sarif') != ''
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: snyk.sarif
+      - name: Snyk monitor (update Snyk UI)
+        if: github.ref == 'refs/heads/main'
+        uses: snyk/actions/maven@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: monitor
+          args: >
+            --all-projects
+            --remote-repo-url=${{ github.repository }}
+            --project-name=cicd-demo
