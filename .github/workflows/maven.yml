@@ -27,7 +27,6 @@ jobs:
           cache: maven
       - name: Run tests
         run: mvn -B test
-
   sonar:
     needs: test
     runs-on: ubuntu-latest
