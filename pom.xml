@@ -109,7 +109,7 @@
 			<plugin>
 				<groupId>org.owasp</groupId>
 				<artifactId>dependency-check-maven</artifactId>
-				<version>10.0.4</version>
+				<version>9.1.0</version>
 				<configuration>
 					<format>ALL</format>
 					<failBuildOnCVSS>7.0</failBuildOnCVSS>
