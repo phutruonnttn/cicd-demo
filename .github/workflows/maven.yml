@@ -27,6 +27,29 @@ jobs:
           cache: maven
       - name: Run tests
         run: mvn -B test
+  lint:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+      - name: Run SpotBugs (static analysis)
+        run: mvn -B spotbugs:spotbugs
+      - name: Run Checkstyle (code style)
+        run: mvn -B checkstyle:checkstyle
+      - name: Generate SpotBugs SARIF
+        run: mvn -B spotbugs:spotbugs -Dspotbugs.outputFormat=sarif -Dspotbugs.outputFile=spotbugs.sarif
+      - name: Upload SpotBugs SARIF to GitHub
+        if: always() && hashFiles('spotbugs.sarif') != ''
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: spotbugs.sarif
   sonar:
     needs: test
     runs-on: ubuntu-latest
