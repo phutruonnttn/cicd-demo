@@ -167,6 +167,8 @@ jobs:
     permissions:
       contents: read
       security-events: write
+      issues: write
+      pull-requests: write
     steps:
       - name: OWASP ZAP Baseline Scan (production URL)
         uses: zaproxy/action-baseline@v0.9.0
