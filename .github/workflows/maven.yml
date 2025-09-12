@@ -172,6 +172,8 @@ jobs:
     steps:
       - name: OWASP ZAP Baseline Scan (production URL)
         run: |
+          touch report_json.json report_md.md report_html.html
+          chmod 666 report_json.json report_md.md report_html.html
           docker run --rm -v $(pwd):/zap/wrk/:rw -t ghcr.io/zaproxy/zaproxy:stable zap-baseline.py \
             -t https://cicd-demo-production-3c00.up.railway.app \
             -J report_json.json -w report_md.md -r report_html.html -a
