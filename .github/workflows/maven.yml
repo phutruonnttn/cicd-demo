@@ -71,7 +71,7 @@ jobs:
           restore-keys: ${{ runner.os }}-dc-
       - name: Run OWASP Dependency-Check
         env:
-          NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
+          NVD_API_KEY: ${{ secrets.WORKSHOP6_NVD_API_KEY }}
         run: mvn -B org.owasp:dependency-check-maven:check
       - name: Upload Dependency-Check SARIF
         if: always() && hashFiles('target/dependency-check-report.sarif') != ''
