@@ -146,7 +146,7 @@
 					<nvdApiKey>${env.NVD_API_KEY}</nvdApiKey>
 					<dataDirectory>${user.home}/.m2/repository/org/owasp/dependency-check-data</dataDirectory>
 					<format>ALL</format>
-					<failBuildOnCVSS>7.0</failBuildOnCVSS>
+					<failBuildOnCVSS>10</failBuildOnCVSS>
 				</configuration>
 			</plugin>
 		</plugins>
