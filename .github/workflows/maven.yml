@@ -69,8 +69,10 @@ jobs:
           path: ~/.m2/repository/org/owasp/dependency-check-data
           key: ${{ runner.os }}-dc-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-dc-
-      - name: Run OWASP Dependency-Check (offline mode)
-        run: mvn -B org.owasp:dependency-check-maven:check -Ddependency-check.skipUpdates=true
+      - name: Run OWASP Dependency-Check
+        env:
+          NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
+        run: mvn -B org.owasp:dependency-check-maven:check
       - name: Upload Dependency-Check SARIF
         if: always() && hashFiles('target/dependency-check-report.sarif') != ''
         uses: github/codeql-action/upload-sarif@v3
