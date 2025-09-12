@@ -175,11 +175,16 @@ jobs:
         with:
           target: https://cicd-demo-production-3c00.up.railway.app
           cmd_options: -a
-      - name: Upload ZAP reports
+      - name: Upload ZAP HTML Report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: zap-baseline-report
-          path: |
-            report_html.html
-            report_json.json
+          path: report_html.html
+          
+      - name: Upload ZAP JSON Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: zap-baseline-json
+          path: report_json.json
