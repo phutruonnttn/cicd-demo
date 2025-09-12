@@ -151,19 +151,3 @@ jobs:
           sarif_file: snyk.sarif
       # Note: We rely on GitHub Integration in Snyk for project management.
       # Do not run `snyk monitor` here to avoid creating duplicate targets.
-
-  deploy:
-    needs: [test, lint, sonar, snyk, owasp-depcheck]
-    if: github.ref == 'refs/heads/main' && success()
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-      - name: Install Railway CLI
-        run: npm install -g @railway/cli
-      - name: 'Deploy to Railway (service: cicd-demo)'
-        env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-        run: railway up --service cicd-demo --ci
