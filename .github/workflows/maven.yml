@@ -151,3 +151,25 @@ jobs:
           sarif_file: snyk.sarif
       # Note: We rely on GitHub Integration in Snyk for project management.
       # Do not run `snyk monitor` here to avoid creating duplicate targets.
+
+  zap:
+    needs: [test, lint, sonar, snyk, owasp-depcheck]
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - name: OWASP ZAP Baseline Scan (production URL)
+        uses: zaproxy/action-baseline@v0.9.0
+        with:
+          target: https://cicd-demo-production-3c00.up.railway.app
+          cmd_options: -a
+      - name: Upload ZAP reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: zap-baseline-report
+          path: |
+            report_html.html
+            report_json.json
