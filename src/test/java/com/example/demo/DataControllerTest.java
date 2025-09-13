@@ -13,7 +13,14 @@ public class DataControllerTest {
 
     @Test
     void health() {
-        assertEquals("HEALTH CHECK OK!", dataController.health().getBody().get("status"));
+        assertEquals("UP", dataController.health().getBody().get("status"));
+    }
+    
+    @Test
+    void home() {
+        String homeResponse = dataController.home();
+        assertEquals(true, homeResponse.contains("CI/CD Demo App"));
+        assertEquals(true, homeResponse.contains("Spring Boot"));
     }
 
     @Test
