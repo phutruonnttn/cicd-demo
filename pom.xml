@@ -34,7 +34,7 @@
 		<sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
 		<!-- Force secure versions -->
 		<snakeyaml.version>2.2</snakeyaml.version>
-		<commons-lang3.version>3.18.0</commons-lang3.version>
+		<commons-lang3.version>3.19.0</commons-lang3.version>
 	</properties>
 	<dependencies>
 		<dependency>
